@@ -1,0 +1,28 @@
+import matplotlib.pyplot as plt
+from sklearn.naive_bayes import GaussianNB
+from tensorflow.keras.datasets import mnist
+
+# Load MNIST data
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Flatten and normalize the data
+x_train = x_train.reshape(-1, 784) / 255.0
+x_test = x_test.reshape(-1, 784) / 255.0
+
+# Train the Gaussian Naive Bayes model on a subset
+model = GaussianNB().fit(x_train[:5000], y_train[:5000])
+
+# Predict on a subset of test data
+y_pred = model.predict(x_test[:1000])
+
+# Display some predictions
+plt.figure(figsize=(10, 5))
+for i in range(5):
+    plt.subplot(1, 5, i + 1)
+    plt.imshow(x_test[i].reshape(28, 28), cmap='gray')
+    plt.title(f"Pred: {y_pred[i]}\nTrue: {y_test[i]}")
+    plt.axis('off')
+
+plt.suptitle("Naive Bayes on MNIST", fontsize=14)
+plt.tight_layout()
+plt.show()
