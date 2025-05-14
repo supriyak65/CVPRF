@@ -1,0 +1,47 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the image in grayscale
+image = cv2.imread("image.png", cv2.IMREAD_GRAYSCALE)
+
+# Check if image is loaded correctly
+if image is None:
+    print("Error: Image not found or cannot be loaded.")
+else:
+    # 1. Calculate and plot histogram
+    def calculate_histogram(image, title="Histogram"):
+        histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
+        plt.figure(figsize=(8, 6))
+        plt.plot(histogram, color='black')
+        plt.title(title)
+        plt.xlabel("Pixel Intensity")
+        plt.ylabel("Frequency")
+        plt.xlim([0, 256])
+        plt.grid()
+        plt.show()
+
+    # 2. Histogram Equalization
+    def histogram_equalization(image):
+        return cv2.equalizeHist(image)
+
+    # Apply histogram equalization
+    equalized_image = histogram_equalization(image)
+
+    # Display original and equalized images
+    titles = ['Original', 'Histogram Equalized']
+    images = [image, equalized_image]
+
+    plt.figure(figsize=(10, 6))
+    for i in range(len(images)):
+        plt.subplot(1, 2, i + 1)
+        plt.imshow(images[i], cmap='gray')
+        plt.title(titles[i])
+        plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+    # Plot histogram of original and equalized images
+    calculate_histogram(image, "Original Image Histogram")
+    calculate_histogram(equalized_image, "Equalized Image Histogram")
