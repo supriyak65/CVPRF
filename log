@@ -1,4 +1,4 @@
-# Power law (gamma), log transformation
+# log transformation
 import cv2
 import numpy as np
 
