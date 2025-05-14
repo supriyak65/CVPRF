@@ -1,0 +1,14 @@
+pca
+import cv2
+import numpy as np
+
+img = cv2.imread('shiva.png')
+data = np.float32(img.reshape(-1, 1))
+
+mean, eigenvectors = cv2.PCACompute(data, mean=None, maxComponents=1)
+reconstructed_img = cv2.PCABackProject(cv2.PCAProject(data, mean, eigenvectors), mean, eigenvectors).reshape(img.shape)
+
+cv2.imshow("Original", img)
+cv2.imshow("PCA", reconstructed_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
