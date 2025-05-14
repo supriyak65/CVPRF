@@ -1,0 +1,15 @@
+# Power law (gamma), log transformation
+import cv2
+import numpy as np
+
+image = cv2.imread('Image.png')
+image_float = image.astype(np.float32)
+
+C = 255 / np.log(1 + np.max(image_float))
+log_transformed = C * np.log(1 + image_float)
+log_transformed = np.clip(log_transformed, 0, 255).astype(np.uint8)
+
+cv2.imshow('Original Image', image)
+cv2.imshow('Transformed Image', log_transformed)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
