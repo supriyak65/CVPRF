@@ -1,0 +1,16 @@
+k-means 
+import cv2
+import numpy as np
+
+img = cv2.resize(cv2.imread('shiva.png'), (200, 200))
+Z = img.reshape(-1, 3).astype(np.float32)
+
+_, labels, centers = cv2.kmeans(Z, 7, None,
+    (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0),
+    1, cv2.KMEANS_RANDOM_CENTERS)
+
+seg = centers[labels.flatten()].reshape(img.shape).astype(np.uint8)
+cv2.imshow("original",img)
+cv2.imshow('Segmented', seg)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
