@@ -1,0 +1,15 @@
+RGB-CMY AND HSV
+import cv2 
+import numpy as np
+def rgbcmy(image):
+    return np.uint8(255-image)
+def rgbhsv(image):
+    return cv2.cvtColor(image,cv2.COLOR_RGB2HSV)
+img = cv2.imread("shiva.png")
+img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+img1 = rgbcmy(img)
+img2 = rgbhsv(img)
+cv2.imshow("imag",img1)
+cv2.imshow("img",img2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
