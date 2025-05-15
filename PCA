@@ -1,14 +1,14 @@
-pca
 import cv2
 import numpy as np
+from matplotlib import pyplot as plt
 
-img = cv2.imread('shiva.png')
+img = cv2.imread('h2.jpg')
 data = np.float32(img.reshape(-1, 1))
 
 mean, eigenvectors = cv2.PCACompute(data, mean=None, maxComponents=1)
-reconstructed_img = cv2.PCABackProject(cv2.PCAProject(data, mean, eigenvectors), mean, eigenvectors).reshape(img.shape)
+reduced = cv2.PCAProject(data, mean, eigenvectors)
+reconstructed = cv2.PCABackProject(reduced, mean, eigenvectors).reshape(img.shape).astype(np.uint8)
 
-cv2.imshow("Original", img)
-cv2.imshow("PCA", reconstructed_img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+plt.subplot(1, 2, 1), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('Original'), plt.axis('off')
+plt.subplot(1, 2, 2), plt.imshow(cv2.cvtColor(reconstructed, cv2.COLOR_BGR2RGB)), plt.title('PCA'), plt.axis('off')
+plt.show()
